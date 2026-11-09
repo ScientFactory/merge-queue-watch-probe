@@ -1,0 +1,15 @@
+name: check
+on:
+  pull_request:
+  merge_group:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail only in the merge queue when FAIL_IN_QUEUE exists
+        run: |
+          if [ "${{ github.event_name }}" = "merge_group" ] && [ -f FAIL_IN_QUEUE ]; then
+            echo "failing on purpose in the queue"; exit 1
+          fi
+          echo ok
