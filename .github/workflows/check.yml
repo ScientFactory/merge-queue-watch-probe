@@ -12,4 +12,7 @@ jobs:
           if [ "${{ github.event_name }}" = "merge_group" ] && [ -f FAIL_IN_QUEUE ]; then
             echo "failing on purpose in the queue"; exit 1
           fi
+          if [ "${{ github.event_name }}" = "merge_group" ] && [ -f SLOW_IN_QUEUE ]; then
+            echo "outlasting the queue's check timeout on purpose"; sleep 240
+          fi
           echo ok
